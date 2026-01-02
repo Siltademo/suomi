@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Siltatel | Häiritsevä IoT-yhteysratkaisu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #050505;
+      --accent: #00f2ff;
+      --accent-dim: rgba(0, 242, 255, 0.15);
+      --card-bg: rgba(255, 255, 255, 0.03);
+      --text-main: #ffffff;
+      --text-muted: #a1a1aa;
+      --border: rgba(255, 255, 255, 0.1);
+      --nav-height: 80px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 50px 50px;
+      mask-image: radial-gradient(ellipse at center, black, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse at center, black, transparent 80%);
+      z-index: -1;
+      opacity: 0.3;
+    }
+
+    nav {
+      height: var(--nav-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10%;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(5, 5, 5, 0.8);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 24px;
+      letter-spacing: -1px;
+      color: var(--text-main);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    header {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: var(--nav-height) 10% 0;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      text-transform: uppercase;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      border-radius: 50px;
+      width: fit-content;
+      margin-bottom: 32px;
+    }
+
+    h1 {
+      font-size: clamp(48px, 10vw, 90px);
+      font-weight: 800;
+      letter-spacing: -4px;
+      line-height: 0.85;
+      margin-bottom: 30px;
+      background: linear-gradient(to bottom, #fff 50%, #666 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p.lead {
+      font-size: clamp(18px, 2vw, 22px);
+      color: var(--text-muted);
+      max-width: 650px;
+      margin-bottom: 48px;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .cta-btn {
+      background: var(--text-main);
+      color: var(--bg-dark);
+      padding: 20px 40px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 14px;
+    }
+
+    .cta-btn.secondary {
+      background: transparent;
+      color: var(--text-main);
+      border: 1px solid var(--border);
+    }
+
+    section {
+      padding: 140px 10%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-tag {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      font-size: clamp(32px, 5vw, 48px);
+      letter-spacing: -2px;
+      margin-bottom: 60px;
+      font-weight: 800;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 48px;
+      border-radius: 24px;
+    }
+
+    .card h3 {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 16px;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 80px 10% 40px;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      header, section { padding: 100px 5%; }
+      h1 { letter-spacing: -2px; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+<nav>
+  <a href="#" class="logo">SILTA<span>TEL</span></a>
+  <a href="#contact" class="cta-btn" style="padding:10px 20px;font-size:12px;">Pyydä pääsy</a>
+</nav>
+
+<header>
+  <div class="badge">
+    <span style="width:8px;height:8px;background:var(--accent);border-radius:50%;"></span>
+    Verkon tila: Toiminnassa
+  </div>
+  <h1>Globaali eSIM-<br>infrastruktuuri.</h1>
+  <p class="lead">
+    Siltatel tarjoaa liiketoimintakriittistä IoT-yhteyttä. Yhdistämme laitteet mihin tahansa
+    mobiiliverkkoon, missä päin maailmaa tahansa, automaattisella profiilinvaihdolla ja
+    suomalaisella luotettavuudella.
+  </p>
+  <div class="cta-group">
+    <a href="#contact" class="cta-btn">Varaa demo</a>
+    <a href="#tech" class="cta-btn secondary">Tutustu teknologiaan</a>
+  </div>
+</header>
+
+<section id="tech">
+  <span class="section-tag">Ydinominaisuudet</span>
+  <h2>Yksi SIM. Rajaton kattavuus.</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>Dynaaminen verkonvalinta</h3>
+      <p>Älykäs ohjelmistokerroksemme valitsee automaattisesti parhaan paikallisen verkon
+         signaalin ja laadun perusteella.</p>
+    </div>
+    <div class="card">
+      <h3>Etäprovisiointi</h3>
+      <p>OTA-pohjainen eSIM-profiilien hallinta – vaihda operaattoria ilman fyysistä SIM-korttia.</p>
+    </div>
+    <div class="card">
+      <h3>Yhtenäinen hallintanäkymä</h3>
+      <p>Valvo, hallitse ja suojaa tuhansia IoT-laitteita maailmanlaajuisesti yhdestä näkymästä.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <span class="section-tag">Älykäs infrastruktuuri</span>
+  <h2>Rakennettu tulevaisuuden sähköverkkoa varten.</h2>
+  <p class="lead">
+    Tarjoamme energia- ja sähköverkkoyhtiöille yhteysratkaisuja, jotka toimivat luotettavasti
+    vaativimmissakin ympäristöissä.
+  </p>
+  <div class="grid">
+    <div class="card">
+      <h3>Sähköyhtiötason ratkaisu</h3>
+      <p>Suunniteltu 10–15 vuoden elinkaarille älymittauksessa ja sähkönjakelussa.</p>
+    </div>
+    <div class="card">
+      <h3>Yksityinen APN</h3>
+      <p>Räätälöidyt verkkoratkaisut, joissa data ei koskaan kulje julkisen internetin kautta.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="text-align:center;">
+  <h2>Skaalaa IoT-laitteistosi.</h2>
+  <p class="lead" style="margin:0 auto 40px;">
+    Ota yhteyttä Helsingin insinööritiimiimme ja keskustellaan globaalista käyttöönotostasi.
+  </p>
+  <a href="mailto:sales@siltatel.com" class="cta-btn">Keskustele asiantuntijan kanssa</a>
+</section>
+
+<footer>
+  <div class="footer-links">
+    <a href="#">Teknologia</a>
+    <a href="#">Infrastruktuuri</a>
+    <a href="#">Tietoturva</a>
+    <a href="#">Tietosuojakäytäntö</a>
+  </div>
+  <p>© 2026 Siltatel Oy · Helsinki, Suomi · Globaalia IoT-yhteyttä</p>
+</footer>
+
+</body>
+</html>
